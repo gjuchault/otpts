@@ -7,19 +7,19 @@ test('totp()', (t) => {
     secret: '12345678901234567890'
   }
 
-  const hotp = buildTotp(input)
+  const totp = buildTotp(input)
 
-  const hotpCustomInterval = buildTotp({
+  const totpCustomInterval = buildTotp({
     ...input,
     interval: 60,
     digits: 8
   })
 
-  t.is(hotp(59), '287082')
-  t.is(hotpCustomInterval(100), '94287082')
-  t.is(hotp(1111111109), '081804')
-  t.is(hotp(1111111111), '050471')
-  t.is(hotp(1234567890), '005924')
-  t.is(hotp(2000000000), '279037')
-  t.is(hotp(20000000000), '353130')
+  t.is(totp(59), '287082')
+  t.is(totpCustomInterval(100), '94287082')
+  t.is(totp(1111111109), '081804')
+  t.is(totp(1111111111), '050471')
+  t.is(totp(1234567890), '005924')
+  t.is(totp(2000000000), '279037')
+  t.is(totp(20000000000), '353130')
 })

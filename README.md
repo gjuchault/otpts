@@ -111,3 +111,30 @@ const secret = await generateSecret()
 
 const totp = buildTotp({ secret })
 ```
+
+### `generateUri`
+
+This will generate a valid URI that can be used with QR codes.
+
+```
+generateUri(
+  | {
+      type: 'hotp'
+      secret: string
+      label: string
+      issuer?: string
+      hmacAlgorithm?: 'sha1' | 'sha256' | 'sha512'
+      digits?: number
+      initialCounter?: number
+    }
+  | {
+      type: 'totp'
+      secret: string
+      label: string
+      issuer?: string
+      hmacAlgorithm?: 'sha1' | 'sha256' | 'sha512'
+      digits?: number
+      interval?: number
+    }
+) => string
+```

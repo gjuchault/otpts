@@ -21,6 +21,19 @@ const hotp = buildHotp({ secret: 'someSecret' })
 hotp(0)
 ```
 
+Signature:
+```ts
+buildHotp({
+  secret,
+  digits
+}: {
+  // The secret in common
+  secret: string
+  // Digits to generate (6 by default)
+  digits?: number
+})
+```
+
 ## TOTP
 
 ```ts
@@ -37,4 +50,37 @@ totp()
 
 // It is equivalent to
 totp(Date.now() / 1000)
+```
+
+Signature:
+```ts
+buildTotp({
+  secret,
+  interval,
+  digits
+}: {
+  // The secret in common
+  secret: string
+  // Interval between each new code (30sec by default)
+  interval?: number
+  // Digits to generate (6 by default)
+  digits?: number
+})
+```
+
+## Utils
+
+### `generateSecret`
+
+This function will generate a random string using the `crypto` native module. This secret will be exchanged between the two sides so they can generate tokens in an offline way (you should do that in a secure way — HTTPS, etc.).
+
+```ts
+import { buildTotp, generateSecret } from 'otpts'
+
+const secret = await generateSecret()
+
+// send secret through QRCode
+// save secret in database
+
+const totp = buildTotp({ secret })
 ```

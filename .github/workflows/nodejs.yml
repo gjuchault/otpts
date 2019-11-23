@@ -23,6 +23,6 @@ jobs:
       env:
         CI: true
     - name: Publish
-      run: npm publish
+      run: yarn --silent run scripts/canPublish && npm publish || echo "No need to publish"
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

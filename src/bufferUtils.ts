@@ -5,7 +5,10 @@ export const textToBuffer = (input: string) => {
 export const numberToBuffer = (input: number) => {
   const buffer = Buffer.alloc(8)
 
-  buffer.writeIntBE(input, 0, 8)
+  for (let i = buffer.length - 1; i >= 0; i -= 1) {
+    buffer[i] = input & 0xff
+    input >>= 8
+  }
 
   return buffer
 }

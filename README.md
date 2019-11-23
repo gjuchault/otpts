@@ -34,7 +34,9 @@ buildHotp({
   // The secret in common
   secret: string
   // Digits to generate (6 by default)
-  digits?: number
+  digits?: number,
+  // HMAC algorithm ('sha1' by default)
+  hmacAlgorithm?: 'sha1' | 'sha256' | 'sha512'
 }) => {
   // Generate the value for a given UNIX timestamp
   generate: (date?: number) => string,
@@ -82,7 +84,9 @@ buildTotp({
   // Interval between each new code (30sec by default)
   interval?: number
   // Digits to generate (6 by default)
-  digits?: number
+  digits?: number,
+  // HMAC algorithm ('sha1' by default)
+  hmacAlgorithm?: 'sha1' | 'sha256' | 'sha512'
 }) => {
   // Generate the value for a given index
   generate: (counter?: number) => string,

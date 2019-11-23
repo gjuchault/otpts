@@ -43,3 +43,10 @@ test('validateTime()', t => {
   t.throws(() => validateTime('foo'))
   t.throws(() => validateTime(-1))
 })
+
+test('validateHmacAlgorithm()', t => {
+  const validateHmacAlgorithm = validate.validateHmacAlgorithm as any
+
+  t.notThrows(() => validateHmacAlgorithm('sha1'))
+  t.throws(() => validateHmacAlgorithm('foo'))
+})

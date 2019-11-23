@@ -47,3 +47,11 @@ export const validateTime = (time: number) => {
     throw new Error('Expected `time` to be a valid integer')
   }
 }
+
+export const validateHmacAlgorithm = (hmacAlgorithm: string) => {
+  if (!['sha1', 'sha256', 'sha512'].includes(hmacAlgorithm)) {
+    throw new Error(
+      'Expected `hmacAlgorithm` to be either `sha1`, `sha256` or `sha512`'
+    )
+  }
+}

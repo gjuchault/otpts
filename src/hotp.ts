@@ -2,17 +2,28 @@ import crypto from 'crypto'
 
 import { numberToBuffer, textToBuffer } from './bufferUtils'
 import { truncate } from './truncate'
-import { validateSecret, validateDigits, validateCounter } from './validate'
+import {
+  validateSecret,
+  validateDigits,
+  validateCounter,
+  validateHmacAlgorithm
+} from './validate'
 import { areOtpEqual } from './secret'
 
 type BuildHotpParameters = {
   secret: string
   digits?: number
+  hmacAlgorithm?: string
 }
 
-export const buildHotp = ({ secret, digits = 6 }: BuildHotpParameters) => {
+export const buildHotp = ({
+  secret,
+  digits = 6,
+  hmacAlgorithm = 'sha1'
+}: BuildHotpParameters) => {
   validateSecret(secret)
   validateDigits(digits)
+  validateHmacAlgorithm(hmacAlgorithm)
 
   const secretBuffer = textToBuffer(secret)
 
@@ -22,7 +33,7 @@ export const buildHotp = ({ secret, digits = 6 }: BuildHotpParameters) => {
     const counterBuffer = numberToBuffer(counter)
 
     const hash = crypto
-      .createHmac('sha1', secretBuffer)
+      .createHmac(hmacAlgorithm, secretBuffer)
       .update(counterBuffer)
       .digest()
 

@@ -12,7 +12,12 @@ test('totp()', t => {
   const totpCustomInterval = buildTotp({
     ...input,
     interval: 60,
-    digits: 8
+    digits: 8,
+  })
+
+  const totpCustomAlgorithm = buildTotp({
+    ...input,
+    hmacAlgorithm: 'sha256'
   })
 
   t.is(totp.generate(59), '287082')
@@ -22,6 +27,7 @@ test('totp()', t => {
   t.is(totp.generate(2000000000), '279037')
   t.is(totp.generate(20000000000), '353130')
   t.is(totpCustomInterval.generate(100), '94287082')
+  t.is(totpCustomAlgorithm.generate(100), '553149')
 
   t.is(totp.verify('287082', 59), true)
   t.is(totp.verify('287083', 59), false)

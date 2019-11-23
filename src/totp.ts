@@ -3,7 +3,8 @@ import {
   validateSecret,
   validateInterval,
   validateDigits,
-  validateTime
+  validateTime,
+  validateHmacAlgorithm
 } from './validate'
 import { areOtpEqual } from './secret'
 
@@ -11,20 +12,24 @@ export interface BuiltTotpParameters {
   secret: string
   interval?: number
   digits?: number
+  hmacAlgorithm?: string
 }
 
 export const buildTotp = ({
   secret,
   interval = 30,
-  digits = 6
+  digits = 6,
+  hmacAlgorithm = 'sha1'
 }: BuiltTotpParameters) => {
   validateSecret(secret)
   validateInterval(interval)
   validateDigits(digits)
+  validateHmacAlgorithm(hmacAlgorithm)
 
   const hotp = buildHotp({
     secret,
-    digits
+    digits,
+    hmacAlgorithm
   })
 
   const generate = (time: number = Date.now() / 1000) => {
@@ -35,10 +40,8 @@ export const buildTotp = ({
     return hotp.generate(counter)
   }
 
-  const verify = (input: string, time: number = Date.now() / 1000) => areOtpEqual(
-    generate(time),
-    input
-  )
+  const verify = (input: string, time: number = Date.now() / 1000) =>
+    areOtpEqual(generate(time), input)
 
   return {
     generate,

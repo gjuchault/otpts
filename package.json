@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "lint": "prettier --write \"src/**/*.ts\"",
+    "lint": "prettier --write \"{src,tests}/**/*.ts\"",
     "test": "ava",
     "coverage": "nyc --reporter=lcov --reporter=text-summary ava",
     "prepublishOnly": "yarn build"

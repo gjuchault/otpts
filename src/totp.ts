@@ -5,6 +5,7 @@ import {
   validateDigits,
   validateTime
 } from './validate'
+import { areOtpEqual } from './secret'
 
 export interface BuiltTotpParameters {
   secret: string
@@ -26,11 +27,21 @@ export const buildTotp = ({
     digits
   })
 
-  return (time: number = Date.now() / 1000) => {
+  const generate = (time: number = Date.now() / 1000) => {
     validateTime(time)
 
     const counter = Math.floor(time / interval)
 
-    return hotp(counter)
+    return hotp.generate(counter)
+  }
+
+  const verify = (input: string, time: number = Date.now() / 1000) => areOtpEqual(
+    generate(time),
+    input
+  )
+
+  return {
+    generate,
+    verify
   }
 }

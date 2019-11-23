@@ -3,6 +3,7 @@ import crypto from 'crypto'
 import { numberToBuffer, textToBuffer } from './bufferUtils'
 import { truncate } from './truncate'
 import { validateSecret, validateDigits, validateCounter } from './validate'
+import { areOtpEqual } from './secret'
 
 type BuildHotpParameters = {
   secret: string
@@ -15,7 +16,7 @@ export const buildHotp = ({ secret, digits = 6 }: BuildHotpParameters) => {
 
   const secretBuffer = textToBuffer(secret)
 
-  return (counter: number = 0) => {
+  const generate = (counter: number = 0) => {
     validateCounter(counter)
 
     const counterBuffer = numberToBuffer(counter)
@@ -30,5 +31,13 @@ export const buildHotp = ({ secret, digits = 6 }: BuildHotpParameters) => {
     const hotp = truncated % Math.pow(10, digits)
 
     return String(hotp).padStart(digits, '0')
+  }
+
+  const verify = (input: string, counter: number = 0) =>
+    areOtpEqual(generate(counter), input)
+
+  return {
+    generate,
+    verify
   }
 }

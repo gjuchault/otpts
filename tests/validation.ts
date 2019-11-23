@@ -1,16 +1,16 @@
 import test from 'ava'
 import * as validate from '../src/validate'
 
-test('validateSecret()', (t) => {
-  const validateSecret = validate.validateSecret as any;
+test('validateSecret()', t => {
+  const validateSecret = validate.validateSecret as any
 
   t.notThrows(() => validateSecret('hello'))
   t.throws(() => validateSecret(1))
   t.throws(() => validateSecret(''))
 })
 
-test('validateDigits()', (t) => {
-  const validateDigits = validate.validateDigits as any;
+test('validateDigits()', t => {
+  const validateDigits = validate.validateDigits as any
 
   t.notThrows(() => validateDigits(10))
   t.throws(() => validateDigits('foo'))
@@ -18,8 +18,8 @@ test('validateDigits()', (t) => {
   t.throws(() => validateDigits(-1))
 })
 
-test('validateCounter()', (t) => {
-  const validateCounter = validate.validateCounter as any;
+test('validateCounter()', t => {
+  const validateCounter = validate.validateCounter as any
 
   t.notThrows(() => validateCounter(10))
   t.throws(() => validateCounter('foo'))
@@ -27,8 +27,8 @@ test('validateCounter()', (t) => {
   t.throws(() => validateCounter(-1))
 })
 
-test('validateInterval()', (t) => {
-  const validateInterval = validate.validateInterval as any;
+test('validateInterval()', t => {
+  const validateInterval = validate.validateInterval as any
 
   t.notThrows(() => validateInterval(10))
   t.throws(() => validateInterval('foo'))
@@ -36,11 +36,10 @@ test('validateInterval()', (t) => {
   t.throws(() => validateInterval(-1))
 })
 
-test('validateTime()', (t) => {
-  const validateTime = validate.validateTime as any;
+test('validateTime()', t => {
+  const validateTime = validate.validateTime as any
 
   t.notThrows(() => validateTime(10))
   t.throws(() => validateTime('foo'))
   t.throws(() => validateTime(-1))
 })
-

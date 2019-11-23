@@ -12,7 +12,7 @@ test('totp()', t => {
   const totpCustomInterval = buildTotp({
     ...input,
     interval: 60,
-    digits: 8,
+    digits: 8
   })
 
   const totpCustomAlgorithm = buildTotp({

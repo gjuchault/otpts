@@ -1,6 +1,6 @@
 {
   "name": "otpts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "One-Time Password generator",
   "main": "dist/index.umd.js",
   "repository": "git@github.com:gjuchault/otpts.git",

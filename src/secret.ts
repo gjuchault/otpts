@@ -10,3 +10,9 @@ export const generate = async (length: number = 16): Promise<string> =>
       resolve(buf.toString('hex').slice(0, length))
     })
   )
+
+export const areOtpEqual = (left: string, right: string) =>
+  crypto.timingSafeEqual(
+    Buffer.from(left, 'utf-8'),
+    Buffer.from(right, 'utf-8')
+  )

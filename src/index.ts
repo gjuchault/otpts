@@ -1,3 +1,3 @@
 export { buildHotp } from './hotp'
 export { buildTotp } from './totp'
-export { generate as generateSecret } from './secret'
+export { generate as generateSecret, areOtpEqual } from './secret'

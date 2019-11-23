@@ -18,7 +18,11 @@ import { buildHotp } from 'otpts'
 const hotp = buildHotp({ secret: 'someSecret' })
 
 // This will generate a one-time password for a counter to 0
-hotp(0)
+const otp = hotp.generate(0)
+
+// This will compare (using crypto time safe equal) user input to a specific counter value
+// you can think of it as a `hotp.generate(0) === userInput`, time-attack safe
+hotp.verify(otp, 0)
 ```
 
 Signature:
@@ -31,7 +35,12 @@ buildHotp({
   secret: string
   // Digits to generate (6 by default)
   digits?: number
-})
+}) => {
+  // Generate the value for a given UNIX timestamp
+  generate: (date?: number) => string,
+  // Verify a user input for a given UNIX timestamp
+  verify: (input: string, date?: number) => boolean
+}
 ```
 
 ## TOTP
@@ -43,13 +52,22 @@ const totp = buildTotp({ secret: 'someSecret' })
 
 // This will generate a one-time password for the first 30 seconds after the
 // UNIX timestamp 0 (1970-01-01 - 00:00:00)
-totp(0)
+totp.generate(0)
 
 // This will generate a one-time password for the current 30 seconds interval
-totp()
+totp.generate()
 
 // It is equivalent to
-totp(Date.now() / 1000)
+totp.generate(Date.now() / 1000)
+
+// This will generate a one-time password for a counter to 0
+const otp = totp.generate()
+
+// This will compare (using crypto time safe equal) user input to a specific counter value
+// you can think of it as a `totp.generate() === userInput`, time-attack safe
+totp.verify(otp) // true
+
+setTimeout(() => totp.verify(otp), 30 * 1000) // false
 ```
 
 Signature:
@@ -65,7 +83,12 @@ buildTotp({
   interval?: number
   // Digits to generate (6 by default)
   digits?: number
-})
+}) => {
+  // Generate the value for a given index
+  generate: (counter?: number) => string,
+  // Verify a user input for a given index
+  verify: (input: string, counter?: number) => boolean
+}
 ```
 
 ## Utils

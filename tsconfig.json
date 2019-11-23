@@ -6,7 +6,8 @@
     "strict": true,
     "esModuleInterop": true,
     "lib": ["es2015"],
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true
   },
   "include": [
     "src/**/*.ts"

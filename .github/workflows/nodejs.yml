@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Build and test
+    - name: Lint, test and build
       run: |
         yarn install --frozen-lockfile
         yarn lint
@@ -25,3 +25,7 @@ jobs:
         yarn build
       env:
         CI: true
+    - name: Publish
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

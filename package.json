@@ -2,7 +2,7 @@
   "name": "otpts",
   "version": "0.2.2",
   "description": "One-Time Password generator",
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "repository": "git@github.com:gjuchault/otpts.git",
   "author": "Gabriel Juchault <gabriel.juchault@gmail.com>",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "otpts",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "One-Time Password generator",
   "main": "dist/index.js",
   "repository": "git@github.com:gjuchault/otpts.git",
@@ -10,7 +10,8 @@
     "build": "tsc",
     "lint": "prettier --write \"src/**/*.ts\"",
     "test": "ava",
-    "coverage": "nyc --reporter=lcov --reporter=text-summary ava"
+    "coverage": "nyc --reporter=lcov --reporter=text-summary ava",
+    "prepublishOnly": "yarn build"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^0.1.3",

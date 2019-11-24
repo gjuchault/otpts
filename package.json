@@ -6,7 +6,10 @@
   "repository": "git@github.com:gjuchault/otpts.git",
   "author": "Gabriel Juchault <gabriel.juchault@gmail.com>",
   "keywords": [
-    "one-time password", "otp", "mfa", "multi-factor authentication"
+    "one-time password",
+    "otp",
+    "mfa",
+    "multi-factor authentication"
   ],
   "license": "MIT",
   "scripts": {

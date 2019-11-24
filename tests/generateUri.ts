@@ -55,7 +55,7 @@ test('generateUri()', t => {
     generateUri({
       type: 'totp',
       label: 'Github',
-      secret: '12345678901234567890',
+      secret: '12345678901234567890'
     }),
     'otpauth://totp/Github?secret=12345678901234567890'
   )

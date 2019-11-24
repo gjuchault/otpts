@@ -1,6 +1,7 @@
 import crypto from 'crypto'
+import { bufferToBase32 } from './base32'
 
-export const generate = async (length: number = 16): Promise<string> =>
+export const generate = async (length: number = 32): Promise<string> =>
   new Promise((resolve, reject) =>
     crypto.randomBytes(length, (err, buf) => {
       // istanbul ignore if
@@ -8,7 +9,7 @@ export const generate = async (length: number = 16): Promise<string> =>
         return reject(err)
       }
 
-      resolve(buf.toString('hex').slice(0, length))
+      resolve(bufferToBase32(buf).slice(0, length))
     })
   )
 

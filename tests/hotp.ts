@@ -4,7 +4,7 @@ import { buildHotp } from '../src'
 
 test('hotp()', t => {
   const input = {
-    secret: '12345678901234567890'
+    secret: Buffer.from('12345678901234567890')
   }
 
   const { generate, verify } = buildHotp(input)

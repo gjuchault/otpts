@@ -1,7 +1,8 @@
 import crypto from 'crypto'
 
-import { numberToBuffer, textToBuffer } from './bufferUtils'
+import { numberToBuffer, base32Encode } from './bufferUtils'
 import { truncate } from './truncate'
+import { generateUri, GenerateHotpUriParameters } from './generateUri'
 import {
   validateSecret,
   validateDigits,
@@ -11,9 +12,9 @@ import {
 import { areOtpEqual } from './secret'
 
 type BuildHotpParameters = {
-  secret: string
+  secret: Buffer
   digits?: number
-  hmacAlgorithm?: string
+  hmacAlgorithm?: 'sha1' | 'sha256' | 'sha512'
 }
 
 export const buildHotp = ({
@@ -25,15 +26,13 @@ export const buildHotp = ({
   validateDigits(digits)
   validateHmacAlgorithm(hmacAlgorithm)
 
-  const secretBuffer = textToBuffer(secret)
-
   const generate = (counter: number = 0) => {
     validateCounter(counter)
 
     const counterBuffer = numberToBuffer(counter)
 
     const hash = crypto
-      .createHmac(hmacAlgorithm, secretBuffer)
+      .createHmac(hmacAlgorithm, secret)
       .update(counterBuffer)
       .digest()
 
@@ -47,8 +46,23 @@ export const buildHotp = ({
   const verify = (input: string, counter: number = 0) =>
     areOtpEqual(generate(counter), input)
 
+  const uri = ({
+    label,
+    issuer
+  }: Pick<GenerateHotpUriParameters, 'label' | 'issuer'>) =>
+    generateUri({
+      type: 'hotp',
+      secret: base32Encode(secret),
+      label,
+      issuer,
+      hmacAlgorithm,
+      digits,
+      initialCounter: 0
+    })
+
   return {
     generate,
-    verify
+    verify,
+    uri
   }
 }

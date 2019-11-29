@@ -1,4 +1,5 @@
 import { buildHotp } from './hotp'
+import { generateUri, GenerateTotpUriParameters } from './generateUri'
 import {
   validateSecret,
   validateInterval,
@@ -7,12 +8,13 @@ import {
   validateHmacAlgorithm
 } from './validate'
 import { areOtpEqual } from './secret'
+import { base32Encode } from './bufferUtils'
 
 export interface BuiltTotpParameters {
-  secret: string
+  secret: Buffer
   interval?: number
   digits?: number
-  hmacAlgorithm?: string
+  hmacAlgorithm?: 'sha1' | 'sha256' | 'sha512'
 }
 
 export const buildTotp = ({
@@ -43,8 +45,23 @@ export const buildTotp = ({
   const verify = (input: string, time: number = Date.now() / 1000) =>
     areOtpEqual(generate(time), input)
 
+  const uri = ({
+    label,
+    issuer
+  }: Pick<GenerateTotpUriParameters, 'label' | 'issuer'>) =>
+    generateUri({
+      type: 'totp',
+      secret: base32Encode(secret),
+      label,
+      issuer,
+      hmacAlgorithm,
+      digits,
+      interval
+    })
+
   return {
     generate,
-    verify
+    verify,
+    uri
   }
 }

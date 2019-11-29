@@ -10,12 +10,36 @@ TOTP stands for Time-Based One-Time Password Algorithm. It's defined in the [RFC
 OTP algorithms are mostly used for MFA (Multi-factor authentication) as codes sent to the user (SMS, mail, etc.), or generated through a custom application.
 Although you can use HOTP and TOTP for both usage, HOTP is regularly use for sending codes and TOTP used for generation.
 
+## Overview
+
+```ts
+import * as otpts from 'otpts'
+
+const secret = await otpts.generateSecret()
+
+const totp = otpts.buildTotp({
+  secret: otpts.base32Decode(secret)
+})
+
+// Generate a token
+const token = totp.generate()
+
+// Verify a token
+totp.verify(token) // true
+
+// Generate an URI compatible with OTP Apps
+const uri = totp.uri({
+  issuer: 'ACME',
+  label: 'user@mail.com'
+})
+```
+
 ## HOTP
 
 ```ts
 import { buildHotp } from 'otpts'
 
-const hotp = buildHotp({ secret: 'someSecret' })
+const hotp = buildHotp({ secret: someBufferSecret })
 
 // This will generate a one-time password for a counter to 0
 const otp = hotp.generate(0)
@@ -137,4 +161,21 @@ generateUri(
       interval?: number
     }
 ) => string
+```
+
+### `base32Encode`
+
+This will convert a Buffer into a base32 string. This is especially useful on generated buffers as most OTP apps will ask for base32 secrets.
+
+```ts
+import { generateSecret, base32Encode } from 'otpts'
+
+const secret = await generateSecret() // A buffer randomly generated
+
+base32Encode(secret) // Converts the buffer to a string (eg. JBSWY3DPEHPK3PXP)
+```
+
+```
+base32Encode(input: Buffer) => string
+base32Decode(input: string) => Buffer
 ```

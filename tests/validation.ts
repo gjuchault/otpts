@@ -4,7 +4,7 @@ import * as validate from '../src/validate'
 test('validateSecret()', t => {
   const validateSecret = validate.validateSecret as any
 
-  t.notThrows(() => validateSecret('hello'))
+  t.notThrows(() => validateSecret(Buffer.from('hello')))
   t.throws(() => validateSecret(1))
   t.throws(() => validateSecret(''))
 })

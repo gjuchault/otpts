@@ -1,9 +1,10 @@
 import test from 'ava'
-import { generateSecret, areOtpEqual } from '../src'
+import { generate, areOtpEqual } from '../src/secret'
 
-test('generateSecret()', async t => {
-  t.is((await generateSecret()).length, 32)
-  t.is((await generateSecret(8)).length, 8)
+test('generate()', async t => {
+  // buffer to base32 = 8/5 ratio
+  t.is((await generate()).length, 32)
+  t.is((await generate(8)).length, 13)
 })
 
 test('areOtpEqual()', t => {

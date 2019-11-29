@@ -1,6 +1,6 @@
-export const validateSecret = (secret: string) => {
-  if (typeof secret !== 'string') {
-    throw new Error('Expected `secret` to be of type `string`')
+export const validateSecret = (secret: Buffer) => {
+  if (!Buffer.isBuffer(secret)) {
+    throw new Error('Expected `secret` to be of type `Buffer`')
   }
 
   if (!secret.length) {

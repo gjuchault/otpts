@@ -1,6 +1,6 @@
 import { URLSearchParams } from 'url'
 
-type GenerateHotpUriParameters = {
+export type GenerateHotpUriParameters = {
   type: 'hotp'
   secret: string
   label: string
@@ -10,7 +10,7 @@ type GenerateHotpUriParameters = {
   initialCounter?: number
 }
 
-type GenerateTotpUriParameters = {
+export type GenerateTotpUriParameters = {
   type: 'totp'
   secret: string
   label: string
